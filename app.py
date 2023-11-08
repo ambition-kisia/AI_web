@@ -3,8 +3,9 @@ from werkzeug.utils import secure_filename
 import os
 import visualization_docs
 import visualization_mal
-import resnet_doc
+import resnet_nor
 import resnet_mal
+import resnet_class
 
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ def delete_all_files_in_directory(directory_path):
         if os.path.exists(directory_path):
             for filename in os.listdir(directory_path):
                 file_path = os.path.join(directory_path, filename)
-                if os.path.isfile(file_path) and filename != 'test.png':
+                if os.path.isfile(file_path) and filename != 'png':
                     os.remove(file_path)
                     print(f"{file_path} 삭제됨")
             print("디렉토리 내의 모든 파일 삭제 완료")
@@ -41,17 +42,19 @@ def file_upload():
         f.save(file_folder + filename)
         
         # visualization and predict
-        if os.path.splitext(filename)[1] == '.byte':
+        if os.path.splitext(filename)[1] == '.bytes':
             get_image = visualization_mal.visualization()
-            predict = resnet_mal.predict()
+            predict1 = resnet_nor.predict()
+            predict2 = resnet_mal.predict()
             
         else:
             get_image = visualization_docs.visualization()
-            predict = resnet_doc.predict()
+            predict1 = resnet_nor.predict()
+            predict2 = ''
         
         image_name = os.path.splitext(filename)[0] + '.png'
           
-        return render_template('get_result.html', image=get_image, image_name = image_name, result = predict)
+        return render_template('get_result.html', image=get_image, image_name = image_name, result1 = predict1, result2 = predict2)
     
     else:
         return render_template('file_upload.html')

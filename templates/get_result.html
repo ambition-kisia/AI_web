@@ -134,7 +134,10 @@
           <p>{{image_name}}</p>
         </div>
         <ul>
-          {% for item in result %}
+          {% for item in result1 %}
+            <li>{{ item }}</li>
+          {% endfor %} <br>
+          {% for item in result2 %}
             <li>{{ item }}</li>
           {% endfor %}
         </ul>

@@ -21,6 +21,9 @@ class SimpleModel(nn.Module):
         return x
 model = SimpleModel()
 
+
+
+
 loaded_model = SimpleModel()
 loaded_model.load_state_dict(torch.load("mal_model.pth"))
 loaded_model.eval() 
@@ -66,7 +69,33 @@ result = []
 
 for i, probs in enumerate(all_predictions):
     for class_idx, prob in enumerate(probs):
-        result.append(f"Class {class_idx + 1}: Probability {prob.item():.4f}")
+        if class_idx == 0:
+            class_idx = 'Gatak'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 1:
+            class_idx = 'Obfuscator.ACY'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 2:
+            class_idx = 'Kelihos_ver1'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 3:
+            class_idx = 'Tracur'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 4:
+            class_idx = 'Simda'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 5:
+            class_idx = 'Vundo'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 6:
+            class_idx = 'Kalihos_ver3'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 7:
+            class_idx = 'Lollipop'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
+        elif class_idx == 8:
+            class_idx = 'Ranmit'
+            result.append(f"{class_idx}: {prob.item()*100:.2f}%")
 
 
 predicted_classes = torch.argmax(all_predictions, dim=1)
